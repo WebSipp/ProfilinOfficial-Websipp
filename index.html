@@ -2553,7 +2553,7 @@
                             </div>
                         </div>
                         
-                        <a href="#orderForm" class="btn btn-primary btn-block" onclick="return scrollToForm()">
+                        <a href="#pricing" class="btn btn-primary btn-block" onclick="return scrollToForm()">
                             <i class="fas fa-list"></i> Lihat Semua Paket
                         </a>
                     </div>
@@ -2912,7 +2912,7 @@
             </div>
             
             <!-- Order Form -->
-            <div class="order-container card" id="orderForm">
+            <div class="order-container card" id="orderFormContainer">
                 <h3 class="text-2xl mb-4 text-center">Formulir Pemesanan</h3>
                 <p class="text-center text-gray-600 mb-6">Isi formulir berikut untuk memesan website profesional sesuai kebutuhan Anda.</p>
                 
@@ -3170,6 +3170,20 @@
             initAnimations();
             initFormSubmission();
             initPriceAnimations();
+            enhanceFormValidation();
+            lazyLoadImages();
+            enhanceUX();
+            
+            // Log initialization
+            console.log('WebSipp website initialized successfully!');
+            
+            // Add loading animation on page load
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
         });
         
         // ============================
@@ -3194,7 +3208,7 @@
             // Highlight selected pricing card
             highlightSelectedPackage(packageName);
             
-            // Scroll to form
+            // Scroll to pricing section
             scrollToForm();
             
             // Show success notification
@@ -3202,28 +3216,32 @@
         }
         
         // ============================
-        // SCROLL TO FORM FUNCTION
+        // SCROLL TO FORM FUNCTION - FIXED
         // ============================
         function scrollToForm() {
-            const formSection = document.getElementById('orderForm');
-            if (formSection) {
-                // Smooth scroll to form
-                formSection.scrollIntoView({
+            const pricingSection = document.getElementById('pricing');
+            if (pricingSection) {
+                // Smooth scroll to pricing section
+                pricingSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
                 
-                // Add slight delay for visual effect
+                // Add slight delay for visual effect on form
                 setTimeout(() => {
-                    // Add visual highlight
-                    formSection.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.3)';
-                    formSection.style.transition = 'box-shadow 0.3s ease';
-                    
-                    // Remove highlight after 1.5 seconds
-                    setTimeout(() => {
-                        formSection.style.boxShadow = '';
-                    }, 1500);
-                }, 300);
+                    // Add visual highlight to form container
+                    const formContainer = document.getElementById('orderFormContainer') || 
+                                          document.querySelector('.order-container.card');
+                    if (formContainer) {
+                        formContainer.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.3)';
+                        formContainer.style.transition = 'box-shadow 0.3s ease';
+                        
+                        // Remove highlight after 1.5 seconds
+                        setTimeout(() => {
+                            formContainer.style.boxShadow = '';
+                        }, 1500);
+                    }
+                }, 500); // Delay 500ms untuk pas landing di form
                 
                 return false; // Prevent default anchor behavior
             }
@@ -3373,19 +3391,19 @@
         }
         
         // ============================
-        // INITIALIZE MOBILE MENU
+        // INITIALIZE MOBILE MENU - FIXED
         // ============================
         function initMobileMenu() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.querySelector('.nav-links');
-            const navLinksItems = document.querySelectorAll('.nav-link');
-            const header = document.getElementById('header');
             
             if (!mobileMenuBtn || !navLinks) return;
             
             // Toggle mobile menu
             mobileMenuBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 e.stopPropagation();
+                
                 navLinks.classList.toggle('active');
                 
                 // Change icon based on menu state
@@ -3402,6 +3420,7 @@
             });
             
             // Close mobile menu when clicking a link
+            const navLinksItems = document.querySelectorAll('.nav-link');
             navLinksItems.forEach(link => {
                 link.addEventListener('click', function() {
                     navLinks.classList.remove('active');
@@ -3409,8 +3428,10 @@
                     
                     // Reset icon
                     const icon = mobileMenuBtn.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
+                    if (icon) {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
                 });
             });
             
@@ -3518,14 +3539,14 @@
         }
         
         // ============================
-        // INITIALIZE FORM SUBMISSION
+        // INITIALIZE FORM SUBMISSION - FIXED
         // ============================
         function initFormSubmission() {
-            const orderForm = document.getElementById('orderForm');
+            const orderFormElement = document.querySelector('form#orderForm');
             
-            if (!orderForm) return;
+            if (!orderFormElement) return;
             
-            orderForm.addEventListener('submit', function(e) {
+            orderFormElement.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
                 // Get form values
@@ -3579,7 +3600,7 @@
                 
                 // Reset form
                 setTimeout(() => {
-                    orderForm.reset();
+                    orderFormElement.reset();
                     
                     // Reset package selection
                     const websiteSelect = document.getElementById('jenis-website');
@@ -3837,33 +3858,6 @@
                 });
             });
         }
-        
-        // ============================
-        // INITIALIZE ALL FUNCTIONS
-        // ============================
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize all functions
-            initMobileMenu();
-            initHeaderEffects();
-            initAnimations();
-            initFormLogic();
-            initFormSubmission();
-            initPriceAnimations();
-            enhanceFormValidation();
-            lazyLoadImages();
-            enhanceUX();
-            
-            // Log initialization
-            console.log('WebSipp website initialized successfully!');
-            
-            // Add loading animation on page load
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.3s ease';
-            
-            setTimeout(() => {
-                document.body.style.opacity = '1';
-            }, 100);
-        });
         
         // ============================
         // WINDOW LOAD EVENT

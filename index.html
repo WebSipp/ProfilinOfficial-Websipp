@@ -409,6 +409,29 @@
             padding-right: var(--space-10);
         }
 
+        /* Selected Package Highlight */
+        .selected-package {
+            border-left: 4px solid var(--primary-500) !important;
+            background: rgba(99, 102, 241, 0.03) !important;
+        }
+
+        .selected-indicator {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary-500);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            box-shadow: var(--shadow-md);
+            z-index: 2;
+        }
+
         /* ===== HEADER & NAVIGATION ===== */
         .header {
             position: fixed;
@@ -1186,6 +1209,7 @@
             padding: var(--space-6);
             position: relative;
             height: 100%;
+            transition: all 0.3s ease;
         }
 
         .pricing-badge {
@@ -1326,9 +1350,15 @@
             display: block;
         }
 
+        .form-status.success {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--success);
+            color: var(--gray-700);
+            display: block;
+        }
+
         .form-status .status-icon {
             margin-right: var(--space-2);
-            color: var(--info);
         }
 
         .honesty-panel {
@@ -1996,23 +2026,6 @@
             to { opacity: 0; transform: translateX(100%); }
         }
 
-        /* Ripple effect styles */
-        .ripple {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-animation 0.6s linear;
-            pointer-events: none;
-        }
-        
-        @keyframes ripple-animation {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-
         /* Optimasi untuk mobile: nonaktifkan animasi berat */
         @media (max-width: 768px) {
             .btn::before,
@@ -2203,7 +2216,7 @@
                             </div>
                         </div>
                         
-                        <a href="#pricing" class="btn btn-primary btn-block">
+                        <a href="#orderForm" class="btn btn-primary btn-block" onclick="return scrollToForm()">
                             <i class="fas fa-list"></i> Lihat Semua Paket
                         </a>
                     </div>
@@ -2469,7 +2482,7 @@
             <!-- Container untuk 2 paket pricing -->
             <div class="pricing-container">
                 <!-- Paket 1 - Portfolio Pribadi -->
-                <div class="pricing-card card animate-on-scroll">
+                <div class="pricing-card card animate-on-scroll" id="packagePortfolio">
                     <div class="limited-spot-badge">Spot Terbatas</div>
                     
                     <div class="pricing-header">
@@ -2509,13 +2522,13 @@
                         </div>
                     </div>
                     
-                    <a href="#orderForm" class="btn btn-primary btn-block btn-lg">
+                    <button type="button" class="btn btn-primary btn-block btn-lg" onclick="selectPackage('Paket Portfolio (Rp 30.000)')">
                         <i class="fas fa-shopping-cart"></i> Pilih Paket Portfolio
-                    </a>
+                    </button>
                 </div>
                 
                 <!-- Paket 2 - Company Profile & Toko Online Sederhana -->
-                <div class="pricing-card card animate-on-scroll">
+                <div class="pricing-card card animate-on-scroll" id="packageBisnis">
                     <div class="limited-spot-badge">Spot Terbatas</div>
                     
                     <div class="pricing-header">
@@ -2545,7 +2558,7 @@
                             <i class="fas fa-check-circle check-icon"></i>
                             <span>Boleh revisi 2x sampai puas</span>
                         </div>
-                        <div class="feature-check {
+                        <div class="feature-check">
                             <i class="fas fa-check-circle check-icon"></i>
                             <span>Dijamin selesai dalam 36 jam</span>
                         </div>
@@ -2555,9 +2568,9 @@
                         </div>
                     </div>
                     
-                    <a href="#orderForm" class="btn btn-success btn-block btn-lg">
+                    <button type="button" class="btn btn-success btn-block btn-lg" onclick="selectPackage('Paket Bisnis (Rp 50.000)')">
                         <i class="fas fa-briefcase"></i> Pilih Paket Bisnis
-                    </a>
+                    </button>
                 </div>
             </div>
             
@@ -2785,57 +2798,164 @@
     </div>
 
     <script>
-        // DOM Ready
+        // ============================
+        // GLOBAL VARIABLES
+        // ============================
+        
+        // Data mapping untuk paket dan jenis website
+        const packageWebsiteMapping = {
+            'Paket Portfolio (Rp 30.000)': {
+                websites: [
+                    { value: 'Portfolio Personal', label: 'Portfolio Personal' }
+                ],
+                note: 'Paket Portfolio khusus untuk website portfolio pribadi.'
+            },
+            'Paket Bisnis (Rp 50.000)': {
+                websites: [
+                    { value: 'Company Profile', label: 'Company Profile' },
+                    { value: 'Toko Online Sederhana', label: 'Toko Online Sederhana' }
+                ],
+                note: 'Paket Bisnis cocok untuk company profile atau toko online sederhana.'
+            }
+        };
+        
+        // Current selected package
+        let currentSelectedPackage = null;
+        
+        // ============================
+        // DOM READY
+        // ============================
         document.addEventListener('DOMContentLoaded', function() {
-            // ============================
-            // MOBILE MENU FUNCTIONALITY
-            // ============================
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-            const navLinks = document.querySelector('.nav-links');
-            const navLinksItems = document.querySelectorAll('.nav-link');
+            // Initialize all functions
+            initMobileMenu();
+            initFormLogic();
+            initHeaderEffects();
+            initAnimations();
+            initFormSubmission();
+            initPriceAnimations();
+        });
+        
+        // ============================
+        // SELECT PACKAGE FUNCTION (MAIN FEATURE)
+        // ============================
+        function selectPackage(packageName) {
+            console.log('Memilih paket:', packageName);
             
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                    ? '<i class="fas fa-times"></i>' 
-                    : '<i class="fas fa-bars"></i>';
-            });
+            // Update current selection
+            currentSelectedPackage = packageName;
             
-            navLinksItems.forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            // Update dropdown
+            const packageSelect = document.getElementById('jenis-paket');
+            if (packageSelect) {
+                packageSelect.value = packageName;
+                
+                // Trigger change event to update website options
+                const event = new Event('change');
+                packageSelect.dispatchEvent(event);
+            }
+            
+            // Highlight selected pricing card
+            highlightSelectedPackage(packageName);
+            
+            // Scroll to form
+            scrollToForm();
+            
+            // Show success notification
+            showNotification(`Paket <strong>${packageName}</strong> telah dipilih!`, 'success');
+        }
+        
+        // ============================
+        // SCROLL TO FORM FUNCTION
+        // ============================
+        function scrollToForm() {
+            const formSection = document.getElementById('orderForm');
+            if (formSection) {
+                // Smooth scroll to form
+                formSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
                 });
-            });
+                
+                // Add slight delay for visual effect
+                setTimeout(() => {
+                    // Add visual highlight
+                    formSection.style.boxShadow = '0 0 0 3px rgba(99, 102, 241, 0.3)';
+                    formSection.style.transition = 'box-shadow 0.3s ease';
+                    
+                    // Remove highlight after 1.5 seconds
+                    setTimeout(() => {
+                        formSection.style.boxShadow = '';
+                    }, 1500);
+                }, 300);
+                
+                return false; // Prevent default anchor behavior
+            }
+            return true;
+        }
+        
+        // ============================
+        // HIGHLIGHT SELECTED PACKAGE
+        // ============================
+        function highlightSelectedPackage(packageName) {
+            // Remove all highlights first
+            const portfolioCard = document.getElementById('packagePortfolio');
+            const bisnisCard = document.getElementById('packageBisnis');
             
-            // ============================
-            // FORM PACKAGE-WEBSITE MAPPING
-            // ============================
-            
-            // Data mapping untuk paket dan jenis website
-            const packageWebsiteMapping = {
-                'Paket Portfolio (Rp 30.000)': {
-                    websites: [
-                        { value: 'Portfolio Personal', label: 'Portfolio Personal' }
-                    ],
-                    note: 'Paket Portfolio khusus untuk website portfolio pribadi.'
-                },
-                'Paket Bisnis (Rp 50.000)': {
-                    websites: [
-                        { value: 'Company Profile', label: 'Company Profile' },
-                        { value: 'Toko Online Sederhana', label: 'Toko Online Sederhana' }
-                    ],
-                    note: 'Paket Bisnis cocok untuk company profile atau toko online sederhana.'
+            if (portfolioCard) {
+                portfolioCard.classList.remove('selected-package');
+                // Remove indicator if exists
+                const existingIndicator = portfolioCard.querySelector('.selected-indicator');
+                if (existingIndicator) {
+                    existingIndicator.remove();
                 }
-            };
+            }
             
-            // Elemen DOM
+            if (bisnisCard) {
+                bisnisCard.classList.remove('selected-package');
+                // Remove indicator if exists
+                const existingIndicator = bisnisCard.querySelector('.selected-indicator');
+                if (existingIndicator) {
+                    existingIndicator.remove();
+                }
+            }
+            
+            // Add highlight to selected package
+            let selectedCard = null;
+            if (packageName.includes('Portfolio')) {
+                selectedCard = portfolioCard;
+            } else if (packageName.includes('Bisnis')) {
+                selectedCard = bisnisCard;
+            }
+            
+            if (selectedCard) {
+                selectedCard.classList.add('selected-package');
+                
+                // Add visual indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'selected-indicator';
+                indicator.innerHTML = '<i class="fas fa-check"></i>';
+                selectedCard.appendChild(indicator);
+                
+                // Add animation
+                selectedCard.style.transform = 'translateY(-8px)';
+                setTimeout(() => {
+                    selectedCard.style.transform = 'translateY(-4px)';
+                }, 300);
+            }
+        }
+        
+        // ============================
+        // INITIALIZE FORM LOGIC
+        // ============================
+        function initFormLogic() {
             const packageSelect = document.getElementById('jenis-paket');
             const websiteSelect = document.getElementById('jenis-website');
             const websiteNote = document.getElementById('websiteNote');
             const formStatus = document.getElementById('formStatus');
             
-            // Fungsi untuk mengupdate opsi jenis website
+            if (!packageSelect || !websiteSelect) return;
+            
+            // Function to update website options
             function updateWebsiteOptions(selectedPackage) {
                 // Reset dropdown
                 websiteSelect.innerHTML = '';
@@ -2849,12 +2969,16 @@
                     websiteSelect.disabled = true;
                     
                     // Update note
-                    websiteNote.innerHTML = '<i class="fas fa-info-circle"></i> Opsi jenis website akan muncul setelah memilih paket.';
+                    if (websiteNote) {
+                        websiteNote.innerHTML = '<i class="fas fa-info-circle"></i> Opsi jenis website akan muncul setelah memilih paket.';
+                    }
                     
                     // Update status
-                    formStatus.innerHTML = '<i class="fas fa-info-circle status-icon"></i> Pilih paket terlebih dahulu untuk melihat opsi jenis website yang tersedia.';
-                    formStatus.className = 'form-status info';
-                    formStatus.style.display = 'block';
+                    if (formStatus) {
+                        formStatus.innerHTML = '<i class="fas fa-info-circle status-icon"></i> Pilih paket terlebih dahulu untuk melihat opsi jenis website yang tersedia.';
+                        formStatus.className = 'form-status info';
+                        formStatus.style.display = 'block';
+                    }
                     
                     return;
                 }
@@ -2885,25 +3009,137 @@
                 websiteSelect.disabled = false;
                 
                 // Update note
-                websiteNote.innerHTML = `<i class="fas fa-info-circle"></i> ${packageData.note}`;
+                if (websiteNote) {
+                    websiteNote.innerHTML = `<i class="fas fa-info-circle"></i> ${packageData.note}`;
+                }
                 
                 // Update status
-                formStatus.innerHTML = `<i class="fas fa-check-circle status-icon" style="color: var(--success)"></i> Paket <strong>${selectedPackage}</strong> dipilih. Pilih jenis website yang sesuai.`;
-                formStatus.className = 'form-status info';
-                formStatus.style.display = 'block';
+                if (formStatus) {
+                    formStatus.innerHTML = `<i class="fas fa-check-circle status-icon" style="color: var(--success)"></i> Paket <strong>${selectedPackage}</strong> dipilih. Pilih jenis website yang sesuai.`;
+                    formStatus.className = 'form-status success';
+                    formStatus.style.display = 'block';
+                }
+                
+                // Highlight selected package
+                highlightSelectedPackage(selectedPackage);
             }
             
             // Event listener untuk perubahan paket
             packageSelect.addEventListener('change', function() {
                 const selectedPackage = this.value;
+                currentSelectedPackage = selectedPackage;
                 updateWebsiteOptions(selectedPackage);
             });
             
-            // ============================
-            // FORM VALIDATION & SUBMISSION
-            // ============================
+            // Initialize
+            updateWebsiteOptions(packageSelect.value);
+        }
+        
+        // ============================
+        // INITIALIZE MOBILE MENU
+        // ============================
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.querySelector('.nav-links');
+            const navLinksItems = document.querySelectorAll('.nav-link');
             
+            if (!mobileMenuBtn || !navLinks) return;
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
+            });
+            
+            navLinksItems.forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        }
+        
+        // ============================
+        // INITIALIZE HEADER EFFECTS
+        // ============================
+        function initHeaderEffects() {
+            const header = document.getElementById('header');
+            const sections = document.querySelectorAll('section[id]');
+            const navLinksItems = document.querySelectorAll('.nav-link');
+            
+            if (!header) return;
+            
+            // Header scroll effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Active nav link on scroll
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinksItems.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        }
+        
+        // ============================
+        // INITIALIZE ANIMATIONS
+        // ============================
+        function initAnimations() {
+            // Scroll animations
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            if (animateElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                });
+                
+                animateElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+            
+            // Mobile optimization
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                    el.classList.remove('animate-on-scroll');
+                    el.style.opacity = '1';
+                    el.style.transform = 'none';
+                });
+            }
+        }
+        
+        // ============================
+        // INITIALIZE FORM SUBMISSION
+        // ============================
+        function initFormSubmission() {
             const orderForm = document.getElementById('orderForm');
+            if (!orderForm) return;
             
             orderForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -2966,7 +3202,18 @@ Terima kasih!`;
                     
                     // Reset form
                     orderForm.reset();
-                    updateWebsiteOptions(''); // Reset website options
+                    currentSelectedPackage = null;
+                    
+                    // Reset package selection
+                    const packageSelect = document.getElementById('jenis-paket');
+                    if (packageSelect) {
+                        packageSelect.value = '';
+                        const event = new Event('change');
+                        packageSelect.dispatchEvent(event);
+                    }
+                    
+                    // Remove highlights
+                    highlightSelectedPackage('');
                     
                     // Show success notification
                     showNotification('Form berhasil dikirim! Anda akan dialihkan ke WhatsApp.', 'success');
@@ -2976,122 +3223,13 @@ Terima kasih!`;
                     showNotification('Terjadi kesalahan. Silakan coba lagi.', 'error');
                 }
             });
-            
-            // ============================
-            // HELPER FUNCTIONS
-            // ============================
-            
-            // Notification function
-            function showNotification(message, type) {
-                try {
-                    const existingNotification = document.querySelector('.notification');
-                    if (existingNotification) {
-                        existingNotification.remove();
-                    }
-                    
-                    const notification = document.createElement('div');
-                    notification.className = `notification ${type}`;
-                    notification.innerHTML = `
-                        <div class="notification-content">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                            <span>${message}</span>
-                        </div>
-                    `;
-                    
-                    document.body.appendChild(notification);
-                    
-                    setTimeout(() => {
-                        if (notification.parentNode) {
-                            notification.parentNode.removeChild(notification);
-                        }
-                    }, 3300);
-                } catch (error) {
-                    console.error('Error showing notification:', error);
-                    alert(message);
-                }
-            }
-            
-            // Smooth scroll for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    try {
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            window.scrollTo({
-                                top: targetElement.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                        }
-                    } catch (error) {
-                        console.error('Error scrolling to element:', error);
-                    }
-                });
-            });
-            
-            // ============================
-            // HEADER SCROLL EFFECT
-            // ============================
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-            });
-            
-            // ============================
-            // ACTIVE NAV LINK ON SCROLL
-            // ============================
-            const sections = document.querySelectorAll('section[id]');
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop - 100;
-                    const sectionHeight = section.clientHeight;
-                    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                navLinksItems.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
-            });
-            
-            // ============================
-            // ANIMATIONS
-            // ============================
-            const animateElements = document.querySelectorAll('.animate-on-scroll');
-            
-            if (animateElements.length > 0) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                }, {
-                    threshold: 0.1,
-                    rootMargin: '0px 0px -50px 0px'
-                });
-                
-                animateElements.forEach(el => {
-                    observer.observe(el);
-                });
-            }
-            
-            // ============================
-            // PRICE COUNTER ANIMATION
-            // ============================
+        }
+        
+        // ============================
+        // INITIALIZE PRICE ANIMATIONS
+        // ============================
+        function initPriceAnimations() {
+            // Price counter animation
             const priceElements = document.querySelectorAll('.price-final');
             if (priceElements.length > 0) {
                 priceElements.forEach(element => {
@@ -3117,9 +3255,7 @@ Terima kasih!`;
                 });
             }
             
-            // ============================
-            // STATS COUNTER ANIMATION
-            // ============================
+            // Stats counter animation
             const statNumbers = document.querySelectorAll('.stat-number');
             if (statNumbers.length > 0) {
                 statNumbers.forEach(stat => {
@@ -3146,46 +3282,81 @@ Terima kasih!`;
                     }, 1500);
                 });
             }
-            
-            // ============================
-            // MOBILE OPTIMIZATION
-            // ============================
-            const isMobile = window.innerWidth <= 768;
-            if (isMobile) {
-                document.querySelectorAll('.animate-on-scroll').forEach(el => {
-                    el.classList.remove('animate-on-scroll');
-                    el.style.opacity = '1';
-                    el.style.transform = 'none';
-                });
-                
-                const style = document.createElement('style');
-                style.textContent = `
-                    @media (max-width: 768px) {
-                        .card:hover, .btn:hover, .feature-item:hover, 
-                        .feature-check:hover, .social-icon-header:hover,
-                        .social-link:hover, .portfolio-link:hover {
-                            transform: none !important;
-                        }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            // ============================
-            // VIEWPORT HEIGHT FIX
-            // ============================
-            function setVH() {
-                try {
-                    let vh = window.innerHeight * 0.01;
-                    document.documentElement.style.setProperty('--vh', `${vh}px`);
-                } catch (error) {
-                    console.error('Error setting viewport height:', error);
+        }
+        
+        // ============================
+        // HELPER FUNCTIONS
+        // ============================
+        
+        // Notification function
+        function showNotification(message, type) {
+            try {
+                const existingNotification = document.querySelector('.notification');
+                if (existingNotification) {
+                    existingNotification.remove();
                 }
+                
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.innerHTML = `
+                    <div class="notification-content">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                        <span>${message}</span>
+                    </div>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 3300);
+            } catch (error) {
+                console.error('Error showing notification:', error);
+                alert(message);
             }
-            
-            setVH();
-            window.addEventListener('resize', setVH);
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                // Skip if it's a package selection button (handled separately)
+                if (this.onclick && this.onclick.toString().includes('selectPackage')) {
+                    return;
+                }
+                
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                try {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error scrolling to element:', error);
+                }
+            });
         });
+        
+        // Viewport height fix
+        function setVH() {
+            try {
+                let vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', `${vh}px`);
+            } catch (error) {
+                console.error('Error setting viewport height:', error);
+            }
+        }
+        
+        setVH();
+        window.addEventListener('resize', setVH);
     </script>
 </body>
 </html>

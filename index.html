@@ -392,6 +392,28 @@
             transform: translateY(-2px) scale(1.02);
         }
 
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .btn-purple {
+            background: var(--secondary-600);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-purple:hover {
+            background: var(--secondary-700);
+            transform: translateY(-2px) scale(1.02);
+        }
+
         .btn-whatsapp {
             background: #25D366;
             color: white;
@@ -474,6 +496,16 @@
 
         .badge-success {
             background: var(--success);
+            color: white;
+        }
+
+        .badge-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .badge-purple {
+            background: var(--secondary-600);
             color: white;
         }
 
@@ -1070,6 +1102,52 @@
             margin-bottom: var(--space-8);
         }
 
+        @media (min-width: 1024px) {
+            .pricing-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: var(--space-4);
+            }
+            
+            .pricing-card {
+                padding: var(--space-5);
+            }
+            
+            .pricing-title {
+                font-size: 1.25rem;
+            }
+            
+            .price-promo-full {
+                font-size: 1.75rem;
+            }
+            
+            .features-list {
+                gap: var(--space-2);
+            }
+            
+            .feature-check {
+                font-size: 0.8125rem;
+                padding: var(--space-1) var(--space-2);
+            }
+            
+            .check-icon {
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .pricing-container {
+                gap: var(--space-6);
+            }
+            
+            .pricing-card {
+                padding: var(--space-6);
+            }
+            
+            .pricing-title {
+                font-size: 1.5rem;
+            }
+        }
+
         .pricing-card {
             padding: var(--space-6);
             position: relative;
@@ -1162,6 +1240,12 @@
             to {
                 left: 100%;
             }
+        }
+
+        .price-from-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: var(--space-1);
         }
 
         .price-promo-full {
@@ -1901,8 +1985,8 @@
             }
             
             .pricing-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: var(--space-8);
+                grid-template-columns: repeat(4, 1fr);
+                gap: var(--space-4);
             }
             
             .after-sales-grid {
@@ -1923,6 +2007,10 @@
         @media (min-width: 1280px) {
             .hero-title {
                 font-size: 3rem;
+            }
+            
+            .pricing-container {
+                gap: var(--space-6);
             }
         }
 
@@ -2079,7 +2167,7 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h3>Garansi Kesempurnaan</h3>
-                    <p>Kami pastikan website sempurna. Garansi perbaikan minor 7 hari setelah live.</p>
+                    <p>Kami pastikan website sempurna. Garansi perbaikan sesuai paket yang dipilih.</p>
                 </div>
 
                 <div class="feature-card card animate-on-scroll animate-stagger-3">
@@ -2106,40 +2194,11 @@
             </div>
             
             <div class="portfolio-grid">
-                <!-- Toko Online Card -->
+                <!-- Profil Personal Card -->
                 <div class="portfolio-card card animate-on-scroll">
-                    <i class="fas fa-store portfolio-icon"></i>
-                    <h3>Toko Online</h3>
-                    <p>Website untuk menjual produk online dengan tampilan menarik dan fungsionalitas penjualan.</p>
-                    <a href="https://websipp.github.io/Web-PreOrder-LogaritmaKantin/" class="btn btn-secondary" target="_blank">Lihat Contoh</a>
-                    
-                    <div class="client-portfolio">
-                        <div class="portfolio-title">
-                            <i class="fas fa-link"></i>
-                            Contoh Website Klien:
-                        </div>
-                        <div class="portfolio-list">
-                            <div class="portfolio-item">
-                                <a href="https://websipp.github.io/Web-PreOrder-LogaritmaKantin/" class="portfolio-link" target="_blank">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Web PreOrder Logaritma Kantin
-                                </a>
-                            </div>
-                            <div class="portfolio-item">
-                                <a href="https://websipp.github.io/Fasa-Florist-Web/" class="portfolio-link" target="_blank">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    Fasa Florist – Jasa Buket Bunga
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Portfolio Pribadi Card -->
-                <div class="portfolio-card card animate-on-scroll animate-stagger-1">
                     <i class="fas fa-user-tie portfolio-icon"></i>
-                    <h3>Portfolio Pribadi</h3>
-                    <p>Tampilkan karya dan keahlian Anda dengan website portfolio yang elegan dan profesional.</p>
+                    <h3>Profil Personal</h3>
+                    <p>Website portfolio pribadi, CV online, dan profil diri yang elegan dan profesional.</p>
                     <a href="https://websipp.github.io/AnisaAulia-Web/" class="btn btn-secondary" target="_blank">Lihat Contoh</a>
                     
                     <div class="client-portfolio">
@@ -2151,18 +2210,30 @@
                             <div class="portfolio-item">
                                 <a href="https://websipp.github.io/AnisaAulia-Web/" class="portfolio-link" target="_blank">
                                     <i class="fas fa-external-link-alt"></i>
-                                    Anisa Aulia Web
+                                    Anisa Aulia - Portfolio Pribadi
+                                </a>
+                            </div>
+                            <div class="portfolio-item">
+                                <a href="https://websipp.github.io/Web-HernandyaPradipta/" class="portfolio-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Hernandya Pradipta - Portfolio
+                                </a>
+                            </div>
+                            <div class="portfolio-item">
+                                <a href="https://websipp.github.io/CV-M.Abdul-Qoyyum/" class="portfolio-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    M. Abdul Qoyyum - CV Online
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Company Profile Card -->
-                <div class="portfolio-card card animate-on-scroll animate-stagger-2">
+                <!-- Profil Bisnis Card -->
+                <div class="portfolio-card card animate-on-scroll animate-stagger-1">
                     <i class="fas fa-building portfolio-icon"></i>
-                    <h3>Company Profile</h3>
-                    <p>Tingkatkan kredibilitas bisnis dengan website profil perusahaan yang informatif.</p>
+                    <h3>Profil Bisnis</h3>
+                    <p>Website profil perusahaan, landing page UMKM, dan website jasa profesional.</p>
                     <a href="https://websipp.github.io/RumahTehNinuk-Web/" class="btn btn-secondary" target="_blank">Lihat Contoh</a>
                     
                     <div class="client-portfolio">
@@ -2174,7 +2245,48 @@
                             <div class="portfolio-item">
                                 <a href="https://websipp.github.io/RumahTehNinuk-Web/" class="portfolio-link" target="_blank">
                                     <i class="fas fa-external-link-alt"></i>
-                                    Rumah Teh Ninuk
+                                    Rumah Teh Ninuk - Company Profile
+                                </a>
+                            </div>
+                            <div class="portfolio-item">
+                                <a href="https://websipp.github.io/chan-tastemade-web/" class="portfolio-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Chan Tastemade - Toko Kue
+                                </a>
+                            </div>
+                            <div class="portfolio-item">
+                                <a href="https://websipp.github.io/Fasa-Florist-Web/" class="portfolio-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Fasa Florist - Jasa Buket Bunga
+                                </a>
+                            </div>
+                            <div class="portfolio-item">
+                                <a href="https://websipp.github.io/AdeApriana-CBI/" class="portfolio-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Ade Apriana CBI - Lembaga Pendidikan
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sistem Bisnis Sederhana Card -->
+                <div class="portfolio-card card animate-on-scroll animate-stagger-2">
+                    <i class="fas fa-cogs portfolio-icon"></i>
+                    <h3>Sistem Bisnis Sederhana</h3>
+                    <p>Website dengan fungsi bisnis seperti pre-order, menu digital, dan sistem sederhana.</p>
+                    <a href="https://websipp.github.io/Web-PreOrder-LogaritmaKantin/" class="btn btn-secondary" target="_blank">Lihat Contoh</a>
+                    
+                    <div class="client-portfolio">
+                        <div class="portfolio-title">
+                            <i class="fas fa-link"></i>
+                            Contoh Website Klien:
+                        </div>
+                        <div class="portfolio-list">
+                            <div class="portfolio-item">
+                                <a href="https://websipp.github.io/Web-PreOrder-LogaritmaKantin/" class="portfolio-link" target="_blank">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Logaritma Kantin - Sistem Pre-Order
                                 </a>
                             </div>
                         </div>
@@ -2188,27 +2300,27 @@
     <section class="section pricing" id="pricing">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Paket Harga Promo Perdana</h2>
-                <p class="section-subtitle">Harga spesial untuk validasi pasar. Pilih paket sesuai kebutuhan.</p>
+                <h2 class="section-title">Katalog Layanan & Harga</h2>
+                <p class="section-subtitle">Pilih paket sesuai kebutuhan Anda</p>
             </div>
             
             <div class="pricing-container">
-                <!-- Paket Portfolio -->
-                <div class="pricing-card card animate-on-scroll" id="packagePortfolio">
+                <!-- Paket Profil Personal -->
+                <div class="pricing-card card animate-on-scroll" id="packagePersonal">
                     <div class="limited-spot-badge">Harga Promo</div>
                     
                     <div class="pricing-header">
-                        <h2 class="pricing-title">PAKET PORTFOLIO</h2>
-                        <p class="pricing-subtitle">Website 1 Halaman Profil CV/Portfolio</p>
+                        <h2 class="pricing-title">PROFIL PERSONAL</h2>
+                        <p class="pricing-subtitle">Website 1 Halaman untuk Individu</p>
                     </div>
                     
                     <div class="price-comparison">
-                        <div class="price-normal-full">Normal: Rp 250.000</div>
+                        <div class="price-normal-full">Normal: Rp 100.000</div>
                         <div class="price-promo-full">Rp 30.000</div>
                     </div>
                     
                     <div class="price-desc">
-                        <p><strong>Untuk validasi pasar!</strong> Segera pesan</p>
+                        <p><strong>Target:</strong> Individu (CV online, portofolio sederhana)</p>
                     </div>
                     
                     <div class="features-list">
@@ -2222,7 +2334,7 @@
                         </div>
                         <div class="feature-check">
                             <i class="fas fa-check-circle check-icon"></i>
-                            <span><strong>2x revisi gratis</strong> dalam 7 hari pertama</span>
+                            <span><strong>Garansi revisi 7 hari</strong></span>
                         </div>
                         <div class="feature-check">
                             <i class="fas fa-check-circle check-icon"></i>
@@ -2234,27 +2346,27 @@
                         </div>
                     </div>
                     
-                    <button type="button" class="btn btn-primary btn-block btn-lg" onclick="selectPackage('Paket Portfolio (Rp 30.000)')">
-                        <i class="fas fa-shopping-cart"></i> Pilih Paket Portfolio
+                    <button type="button" class="btn btn-primary btn-block btn-lg" onclick="selectPackage('Profil Personal (Rp 30.000)')">
+                        <i class="fas fa-shopping-cart"></i> Pilih Paket Personal
                     </button>
                 </div>
                 
-                <!-- Paket Bisnis -->
+                <!-- Paket Profil Bisnis -->
                 <div class="pricing-card card animate-on-scroll animate-stagger-1" id="packageBisnis">
                     <div class="limited-spot-badge">Best value</div>
                     
                     <div class="pricing-header">
-                        <h2 class="pricing-title">PAKET BISNIS</h2>
-                        <p class="pricing-subtitle">Website 1 Halaman Landing Page UMKM/Perusahaan</p>
+                        <h2 class="pricing-title">PROFIL BISNIS</h2>
+                        <p class="pricing-subtitle">Website 1 Halaman untuk UMKM</p>
                     </div>
                     
                     <div class="price-comparison">
-                        <div class="price-normal-full">Normal: Rp 400.000</div>
+                        <div class="price-normal-full">Normal: Rp 200.000</div>
                         <div class="price-promo-full">Rp 50.000</div>
                     </div>
                     
                     <div class="price-desc">
-                        <p><strong>Untuk validasi pasar!</strong> Landing page bisnis premium.</p>
+                        <p><strong>Target:</strong> UMKM, profesional</p>
                     </div>
                     
                     <div class="features-list">
@@ -2268,7 +2380,7 @@
                         </div>
                         <div class="feature-check">
                             <i class="fas fa-check-circle check-icon"></i>
-                            <span><strong>2x revisi gratis</strong> dalam 7 hari pertama</span>
+                            <span><strong>Garansi revisi 7 hari</strong></span>
                         </div>
                         <div class="feature-check">
                             <i class="fas fa-check-circle check-icon"></i>
@@ -2280,8 +2392,100 @@
                         </div>
                     </div>
                     
-                    <button type="button" class="btn btn-success btn-block btn-lg" onclick="selectPackage('Paket Bisnis (Rp 50.000)')">
+                    <button type="button" class="btn btn-success btn-block btn-lg" onclick="selectPackage('Profil Bisnis (Rp 50.000)')">
                         <i class="fas fa-briefcase"></i> Pilih Paket Bisnis
+                    </button>
+                </div>
+
+                <!-- Paket Request/Gift -->
+                <div class="pricing-card card animate-on-scroll animate-stagger-2" id="packageRequest">
+                    <div class="limited-spot-badge">Custom</div>
+                    
+                    <div class="pricing-header">
+                        <h2 class="pricing-title">REQUEST/GIFT/UNDANGAN</h2>
+                        <p class="pricing-subtitle">Website Custom Khusus</p>
+                    </div>
+                    
+                    <div class="price-comparison">
+                        <div class="price-from-label">Mulai dari</div>
+                        <div class="price-promo-full">Rp 100.000</div>
+                    </div>
+                    
+                    <div class="price-desc">
+                        <p><strong>Target:</strong> Undangan digital, kado online, custom request</p>
+                    </div>
+                    
+                    <div class="features-list">
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span>Website custom sesuai request khusus</span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span><strong>Hosting gratis seumur hidup</strong> (GitHub Pages)</span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span><strong>Garansi: Sampai puas</strong></span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span>Waktu pengerjaan menyesuaikan kompleksitas</span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span>Konsultasi intensif via WhatsApp</span>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-warning btn-block btn-lg" onclick="selectPackage('Request/Gift/Undangan (Mulai Rp 100.000)')">
+                        <i class="fas fa-gift"></i> Konsultasi Custom
+                    </button>
+                </div>
+
+                <!-- Paket Sistem Bisnis -->
+                <div class="pricing-card card animate-on-scroll animate-stagger-3" id="packageSistem">
+                    <div class="limited-spot-badge">Advanced</div>
+                    
+                    <div class="pricing-header">
+                        <h2 class="pricing-title">SISTEM BISNIS SEDERHANA</h2>
+                        <p class="pricing-subtitle">Website dengan Fungsi Bisnis</p>
+                    </div>
+                    
+                    <div class="price-comparison">
+                        <div class="price-from-label">Mulai dari</div>
+                        <div class="price-promo-full">Rp 200.000</div>
+                    </div>
+                    
+                    <div class="price-desc">
+                        <p><strong>Target:</strong> Barcode menu, toko online sederhana, sistem bisnis</p>
+                    </div>
+                    
+                    <div class="features-list">
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span>Website dengan fungsi bisnis sederhana</span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span><strong>Hosting gratis seumur hidup</strong> (GitHub Pages)</span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span><strong>Garansi revisi 30 hari</strong></span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span>Waktu pengerjaan 3-7 hari</span>
+                        </div>
+                        <div class="feature-check">
+                            <i class="fas fa-check-circle check-icon"></i>
+                            <span>Support teknis lebih intensif</span>
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-purple btn-block btn-lg" onclick="selectPackage('Sistem Bisnis Sederhana (Mulai Rp 200.000)')">
+                        <i class="fas fa-cogs"></i> Sistem Bisnis
                     </button>
                 </div>
             </div>
@@ -2293,10 +2497,12 @@
                 
                 <div class="form-status info" id="formStatus">
                     <i class="fas fa-info-circle status-icon"></i>
-                    <span>Pilih paket terlebih dahulu untuk melanjutkan pemesanan.</span>
+                    <span>Klik tombol "Pilih Paket" di atas untuk memulai pemesanan.</span>
                 </div>
                 
                 <form id="orderForm">
+                    <input type="hidden" id="jenis-paket" value="">
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="nama" class="form-label">Nama Lengkap *</label>
@@ -2310,21 +2516,9 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="jenis-paket" class="form-label">Pilih Paket Promo *</label>
-                        <select id="jenis-paket" class="form-control" required>
-                            <option value="">-- Pilih Paket Promo --</option>
-                            <option value="Paket Portfolio (Rp 30.000)">Paket Portfolio - Rp 30.000 (Normal: Rp 250.000)</option>
-                            <option value="Paket Bisnis (Rp 50.000)">Paket Bisnis - Rp 50.000 (Normal: Rp 400.000)</option>
-                        </select>
-                        <div class="form-note">
-                            <i class="fas fa-lightbulb"></i> Harga promo perdana untuk validasi pasar. Harga normal kembali setelah periode promo.
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
                         <label for="jenis-website" class="form-label">Jenis Website *</label>
                         <select id="jenis-website" class="form-control" required disabled>
-                            <option value="">-- Pilih paket terlebih dahulu --</option>
+                            <option value="">-- Klik tombol pilih paket terlebih dahulu --</option>
                         </select>
                     </div>
                     
@@ -2333,8 +2527,8 @@
                         <textarea id="pesan" class="form-control" rows="3" placeholder="Warna favorit, referensi website, atau informasi lainnya..."></textarea>
                     </div>
                     
-                    <button type="submit" class="btn btn-whatsapp btn-block btn-lg">
-                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    <button type="submit" class="btn btn-whatsapp btn-block btn-lg" id="submitBtn" disabled>
+                        <i class="fab fa-whatsapp"></i> Pilih Paket Terlebih Dahulu
                     </button>
                     
                     <div class="form-note mt-4">
@@ -2383,7 +2577,7 @@
                     <div class="step-number">4</div>
                     <div class="step-content card">
                         <h3>Launching & Revisi</h3>
-                        <p>Website online! Gunakan masa revisi gratis 7 hari untuk penyempurnaan.</p>
+                        <p>Website online! Gunakan masa garansi sesuai paket untuk penyempurnaan.</p>
                     </div>
                 </div>
             </div>
@@ -2403,8 +2597,13 @@
                     <div class="after-sales-icon">
                         <i class="fas fa-sync-alt"></i>
                     </div>
-                    <h3>Revisi Gratis</h3>
-                    <p>Setiap paket sudah termasuk <strong>revisi minor gratis</strong> dalam <strong>7 hari pertama</strong> setelah website live.</p>
+                    <h3>Revisi Sesuai Paket</h3>
+                    <p>Setiap paket sudah termasuk <strong>revisi gratis</strong> sesuai periode garansi masing-masing.</p>
+                    <ul style="color: var(--gray-600); margin: 1rem 0; padding-left: 1.5rem; text-align: left;">
+                        <li>Profil Personal & Bisnis: <strong>7 hari</strong></li>
+                        <li>Request/Gift/Undangan: <strong>Sampai puas</strong></li>
+                        <li>Sistem Bisnis Sederhana: <strong>30 hari</strong></li>
+                    </ul>
                 </div>
                 
                 <div class="after-sales-card card animate-on-scroll animate-stagger-1">
@@ -2412,9 +2611,9 @@
                         <i class="fas fa-tools"></i>
                     </div>
                     <h3>Maintenance Berbayar</h3>
-                    <p>Perlu update reguler di luar masa revisi gratis? Tersedia solusi maintenance berkelanjutan.</p>
+                    <p>Perlu update reguler di luar masa garansi? Tersedia solusi maintenance berkelanjutan.</p>
                     <p><strong>Paket Maintenance Bulanan mulai Rp 25.000/bulan</strong> termasuk:</p>
-                    <ul style="color: var(--gray-600); margin: 1rem 0; padding-left: 1.5rem;">
+                    <ul style="color: var(--gray-600); margin: 1rem 0; padding-left: 1.5rem; text-align: left;">
                         <li>Update konten teks & gambar (tak terbatas)</li>
                         <li>Konsultasi teknis via WhatsApp</li>
                     </ul>
@@ -2425,9 +2624,9 @@
                         <i class="fas fa-life-ring"></i>
                     </div>
                     <h3>Support Purna Jual</h3>
-                    <p>Tim support kami siap membantu meski masa revisi gratis telah berakhir.</p>
+                    <p>Tim support kami siap membantu meski masa garansi telah berakhir.</p>
                     <p><strong>Layanan support berbayar:</strong></p>
-                    <ul style="color: var(--gray-600); margin: 1rem 0; padding-left: 1.5rem;">
+                    <ul style="color: var(--gray-600); margin: 1rem 0; padding-left: 1.5rem; text-align: left;">
                         <li>Perubahan konten dan konsultasi: Rp 15.000/update</li>
                         <li>Migrasi hosting: Rp 30.000 - 50.000/project</li>
                     </ul>
@@ -2490,9 +2689,9 @@
     </div>
 
     <script>
-        // Package mapping
+        // Package mapping - DIUBAH JADI 4 PAKET
         const packageWebsiteMapping = {
-            'Paket Portfolio (Rp 30.000)': {
+            'Profil Personal (Rp 30.000)': {
                 websites: [
                     { value: 'Website Portfolio Pribadi', label: 'Website Portfolio Pribadi' },
                     { value: 'CV Online Profesional', label: 'CV Online Profesional' },
@@ -2500,12 +2699,28 @@
                     { value: 'Website Profil Diri', label: 'Website Profil Diri' }
                 ]
             },
-            'Paket Bisnis (Rp 50.000)': {
+            'Profil Bisnis (Rp 50.000)': {
                 websites: [
                     { value: 'Landing Page UMKM', label: 'Landing Page UMKM' },
                     { value: 'Website Profil Perusahaan', label: 'Website Profil Perusahaan' },
                     { value: 'Website Jasa Profesional', label: 'Website Jasa Profesional' },
                     { value: 'Website Produk/Toko Sederhana', label: 'Website Produk/Toko Sederhana' }
+                ]
+            },
+            'Request/Gift/Undangan (Mulai Rp 100.000)': {
+                websites: [
+                    { value: 'Undangan Digital Pernikahan', label: 'Undangan Digital Pernikahan' },
+                    { value: 'Website Kado Online', label: 'Website Kado Online' },
+                    { value: 'Website Acara Khusus', label: 'Website Acara Khusus' },
+                    { value: 'Custom Request Lainnya', label: 'Custom Request Lainnya' }
+                ]
+            },
+            'Sistem Bisnis Sederhana (Mulai Rp 200.000)': {
+                websites: [
+                    { value: 'Menu Digital dengan Barcode', label: 'Menu Digital dengan Barcode' },
+                    { value: 'Toko Online Sederhana', label: 'Toko Online Sederhana' },
+                    { value: 'Sistem Booking/Pemesanan', label: 'Sistem Booking/Pemesanan' },
+                    { value: 'Sistem Informasi Sederhana', label: 'Sistem Informasi Sederhana' }
                 ]
             }
         };
@@ -2645,18 +2860,21 @@
         
         // Form logic
         function initFormLogic() {
-            const packageSelect = document.getElementById('jenis-paket');
+            const packageInput = document.getElementById('jenis-paket');
             const websiteSelect = document.getElementById('jenis-website');
             const formStatus = document.getElementById('formStatus');
+            const submitBtn = document.getElementById('submitBtn');
             
             function updateWebsiteOptions(selectedPackage) {
                 websiteSelect.innerHTML = '';
                 
                 if (!selectedPackage) {
-                    websiteSelect.innerHTML = '<option value="">-- Pilih paket terlebih dahulu --</option>';
+                    websiteSelect.innerHTML = '<option value="">-- Klik tombol pilih paket terlebih dahulu --</option>';
                     websiteSelect.disabled = true;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pilih Paket Terlebih Dahulu';
                     if (formStatus) {
-                        formStatus.innerHTML = '<i class="fas fa-info-circle status-icon"></i> Pilih paket promo terlebih dahulu.';
+                        formStatus.innerHTML = '<i class="fas fa-info-circle status-icon"></i> Klik tombol "Pilih Paket" di atas untuk memulai pemesanan.';
                     }
                     return;
                 }
@@ -2675,28 +2893,16 @@
                 });
                 
                 websiteSelect.disabled = false;
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pesan Sekarang';
                 
                 if (formStatus) {
-                    formStatus.innerHTML = `<i class="fas fa-check-circle status-icon"></i> Paket <strong>${selectedPackage}</strong> dipilih.`;
+                    formStatus.innerHTML = `<i class="fas fa-check-circle status-icon"></i> Paket <strong>${selectedPackage}</strong> dipilih. Silakan pilih jenis website.`;
                 }
             }
             
-            packageSelect.addEventListener('change', function() {
-                updateWebsiteOptions(this.value);
-            });
-            
-            updateWebsiteOptions(packageSelect.value);
-            
-            // Animate form controls on focus
-            document.querySelectorAll('.form-control').forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.classList.add('focused');
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.parentElement.classList.remove('focused');
-                });
-            });
+            // Initialize with empty
+            updateWebsiteOptions('');
         }
         
         // Form submission
@@ -2749,20 +2955,46 @@
                 // Reset form
                 setTimeout(() => {
                     orderForm.reset();
-                    document.getElementById('jenis-website').innerHTML = '<option value="">-- Pilih paket terlebih dahulu --</option>';
+                    document.getElementById('jenis-paket').value = '';
+                    document.getElementById('jenis-website').innerHTML = '<option value="">-- Klik tombol pilih paket terlebih dahulu --</option>';
                     document.getElementById('jenis-website').disabled = true;
-                    document.getElementById('formStatus').innerHTML = '<i class="fas fa-info-circle status-icon"></i> Pilih paket promo terlebih dahulu.';
+                    document.getElementById('formStatus').innerHTML = '<i class="fas fa-info-circle status-icon"></i> Klik tombol "Pilih Paket" di atas untuk memulai pemesanan.';
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pilih Paket Terlebih Dahulu';
                 }, 1000);
             });
         }
         
         // Select package function
         function selectPackage(packageName) {
-            const packageSelect = document.getElementById('jenis-paket');
-            packageSelect.value = packageName;
+            const packageInput = document.getElementById('jenis-paket');
+            packageInput.value = packageName;
             
-            const event = new Event('change');
-            packageSelect.dispatchEvent(event);
+            // Update form options
+            const websiteSelect = document.getElementById('jenis-website');
+            const formStatus = document.getElementById('formStatus');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            const packageData = packageWebsiteMapping[packageName];
+            
+            if (!packageData) return;
+            
+            websiteSelect.innerHTML = '<option value="">-- Pilih Jenis Website --</option>';
+            
+            packageData.websites.forEach(website => {
+                const option = document.createElement('option');
+                option.value = website.value;
+                option.textContent = website.label;
+                websiteSelect.appendChild(option);
+            });
+            
+            websiteSelect.disabled = false;
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Pesan Sekarang';
+            
+            if (formStatus) {
+                formStatus.innerHTML = `<i class="fas fa-check-circle status-icon"></i> Paket <strong>${packageName}</strong> dipilih. Silakan pilih jenis website.`;
+            }
             
             // Scroll to form with animation
             setTimeout(() => {
